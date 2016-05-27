@@ -19,7 +19,7 @@ class base_detector
     std::string name;
     virtual bool inside(int, TLorentzVector) =0;
     virtual TLorentzVector Smear(TLorentzVector p) { return p; }
-    virtual double sigma(TLorentzVector p) =0;
+    virtual double sigma(TLorentzVector p) { return 1e10; };
 };
 
 class SubDetector: public base_detector

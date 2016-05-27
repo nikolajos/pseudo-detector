@@ -65,7 +65,6 @@ bool Detector::InsideAcceptance(int pdgid, TLorentzVector p)
     return false;
 }
 
-// TODO eta/phi smearing
 TLorentzVector Detector::Smear(int pdgid, TLorentzVector p)
 {
     std::vector<base_detector*>::iterator min = subsystems.begin();
@@ -132,7 +131,7 @@ void Detector::ATLAS()
     subsystems.push_back(sub);
     
 
-    sub = new SubDetector("HCAL",DetType::Calo,0.75,0.05);
+    sub = new SubDetector("HCAL",DetType::Calo,0.5,0.03);
     // HCAL sees protons,
     sub->allowid.insert(2212);
     sub->allowid.insert(-2212);
@@ -148,19 +147,45 @@ void Detector::ATLAS()
     // neutral K_L
     sub->allowid.insert(130);
     
-    // HCAL covers |eta| < 4.9
+    // HCAL covers |eta| < 3.2
     sub->alloweta[0] = true; // Barrel
     sub->alloweta[1.47] = false;
     sub->alloweta[1.52] = true; // Endcap
-    sub->alloweta[3.07] = false;
-    sub->alloweta[3.22] = true; // FCal
-    sub->alloweta[4.9] = false;
+    sub->alloweta[3.2] = false;
     
     sub->allowpt[0] = false;
     sub->allowpt[25] = true;
     
     subsystems.push_back(sub);
 
+    sub = new SubDetector("FCAL",DetType::Calo, 1, 0.1);
+    // FCAL sees protons,
+    sub->allowid.insert(2212);
+    sub->allowid.insert(-2212);
+    // Neutrons
+    sub->allowid.insert(2112);
+    sub->allowid.insert(-2112);
+    // Pions
+    sub->allowid.insert(211);
+    sub->allowid.insert(-211);
+    // Charged Kaons
+    sub->allowid.insert(321);
+    sub->allowid.insert(-321);
+    // neutral K_L
+    sub->allowid.insert(130);
+    // FCAL also sees photons and electrons
+    sub->allowid.insert(22);
+    sub->allowid.insert(11);
+    sub->allowid.insert(-11);
+
+    sub->alloweta[3.2] = true; // FCal
+    sub->alloweta[4.9] = false;
+
+    sub->allowpt[0] = false;
+    sub->allowpt[25] = true;
+
+    subsystems.push_back(sub);
+    
     sub = new SubDetector("Muon spectrometer",DetType::Muon,0.1);
     sub->allowid.insert(13);
     sub->allowid.insert(-13);
