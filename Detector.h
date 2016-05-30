@@ -2,6 +2,7 @@
 #define DETECTOR_H
 
 #include "TLorentzVector.h"
+#include "TRandom.h"
 #include<vector>
 #include<map>
 #include<set>
@@ -29,8 +30,10 @@ class SubDetector: public base_detector
     {
 	alloweta[0] = true;
 	allowpt[0] = false;
+	rand = TRandom(11027);
     }
     DetType type;
+    TRandom rand;
     double siga; // Stochastic term in uncertainty
     double sigb; // Constant term in uncertainty
     std::set<int> allowid;

@@ -29,23 +29,22 @@ double SubDetector::sigma(TLorentzVector p)
     }
     else
     {
-	return 1000000;
+	return 1e10;
     }
 }
 
 TLorentzVector SubDetector::Smear(TLorentzVector p)
 {
-    TRandom ran(123456789);
     if (type == DetType::Calo)
     {
-	double newE = p.E()+ran.Gaus(0,sigma(p));
+	double newE = p.E()+rand.Gaus(0,sigma(p));
 	double c = sqrt(newE*newE - p.M2() ) / p.P();
 	p = TLorentzVector(c*p.Vect(), newE);
 	    
     }
     else if (type == DetType::Tracker || type == DetType::Muon)
     {
-	double newPt = p.Pt()+ran.Gaus(0,sigma(p));
+	double newPt = p.Pt()+rand.Gaus(0,sigma(p));
 	double newEta = acosh(sqrt(1+p.Pz()*p.Pz()/(newPt*newPt)));
 	p.SetPtEtaPhiM(newPt, newEta, p.Phi(), p.M());
     }
@@ -68,7 +67,7 @@ bool Detector::InsideAcceptance(int pdgid, TLorentzVector p)
 TLorentzVector Detector::Smear(int pdgid, TLorentzVector p)
 {
     std::vector<base_detector*>::iterator min = subsystems.begin();
-    double minsig = 1000000.0;
+    double minsig = 1e9;
     double sig;
     for (std::vector<base_detector*>::iterator it = subsystems.begin(); it != subsystems.end(); ++it)
     {
