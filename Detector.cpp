@@ -198,3 +198,116 @@ void Detector::ATLAS()
     subsystems.push_back(sub);
 }
 
+void Detector::D0()
+{
+    // TODO Forward Proton Detector?
+    
+    /* 
+       Approximate resolutions from 
+       V. M. Abazov et al. Nucl. Instrum. and Meth. A 565 (2006) 463
+       and
+       S. Abachi, et al., Nucl. Instr. and Meth. A 338 (1994) 185
+    */
+    /*
+      ==============================
+                TRACKER
+      ==============================
+    */
+    SubDetector* sub = new SubDetector("Tracker", DetType::Tracker, 0.002, 0.035); 
+    // Tracker accepts electrons
+    sub->allowid.insert(11);
+    sub->allowid.insert(-11);
+    // Muons
+    sub->allowid.insert(13);
+    sub->allowid.insert(-13);
+    // Protons
+    sub->allowid.insert(2212);
+    sub->allowid.insert(-2212);
+    // Pions
+    sub->allowid.insert(211);
+    sub->allowid.insert(-211);
+    // Charged Kaons
+    sub->allowid.insert(321);
+    sub->allowid.insert(-321);
+
+    // Tracker covers |eta| < 3 though resoltion is worse for |eta| > 1.7
+    sub->alloweta[0] = true;
+    sub->alloweta[3] = false;
+
+    sub->alloweta[0] = false;
+    sub->allowpt[1.5] = true; // Value for L1 Trigger in CFT
+    
+    subsystems.push_back(sub);
+    
+    /*
+      ==============================
+                   ECAL
+      ==============================
+    */
+    sub = new SubDetector("ECAL", DetType::Calo, 0.16, 0.003);
+    // ECAL sees photons and electrons
+    sub->allowid.insert(22);
+    sub->allowid.insert(11);
+    sub->allowid.insert(-11);
+
+    sub->alloweta[0] = true;
+    sub->alloweta[0.9] = false;
+
+    sub->alloweta[1.1] = true;
+    sub->alloweta[4] = false;
+
+    sub->allowpt[0] = false;
+    sub->allowpt[15] = true;
+
+    subsystems.push_back(sub);
+	
+    /*
+      ==============================
+                   HCAL
+      ==============================
+    */
+    sub = new SubDetector("HCAL", DetType::Calo, 0.5, 0.04);
+    // HCAL sees protons,
+    sub->allowid.insert(2212);
+    sub->allowid.insert(-2212);
+    // Neutrons
+    sub->allowid.insert(2112);
+    sub->allowid.insert(-2112);
+    // Pions
+    sub->allowid.insert(211);
+    sub->allowid.insert(-211);
+    // Charged Kaons
+    sub->allowid.insert(321);
+    sub->allowid.insert(-321);
+    // neutral K_L
+    sub->allowid.insert(130);
+
+    sub->alloweta[0] = true;
+    sub->alloweta[0.9] = false;
+
+    sub->alloweta[1.1] = true;
+    sub->alloweta[4] = false;
+
+    sub->allowpt[0] = false;
+    sub->allowpt[15] = true;
+
+    subsystems.push_back(sub);
+
+    /*
+      ==============================
+              Muon System
+      ==============================
+    */
+    sub = new SubDetector("Muon system", DetType::Muon, 0.005); // 20 % at ~40 GeV for MDT...
+
+    sub->allowid.insert(13);
+    sub->allowid.insert(-13);
+
+    sub->alloweta[0] = true;
+    sub->alloweta[2] = false;
+
+    sub->allowpt[0] = false;
+    sub->allowpt[3] = true;
+
+    subsystems.push_back(sub);
+}

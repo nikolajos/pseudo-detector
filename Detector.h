@@ -9,7 +9,7 @@
 #include<string>
 #include<math.h>
 
-enum class Geometry {ATLAS, Custom};
+enum class Geometry {ATLAS, D0, Custom};
 enum class DetType {Tracker, Calo, Muon, NONE};
 
 class base_detector
@@ -51,7 +51,7 @@ class Detector
     Detector(Geometry geom = Geometry::ATLAS)
     {
 	if (geom == Geometry::ATLAS) ATLAS();
-	else if (geom == Geometry::Custom) { }
+	else if (geom == Geometry::D0) D0();
     }
     ~Detector()
     {
@@ -67,6 +67,7 @@ class Detector
     std::vector<base_detector*> subsystems;
  private:
     void ATLAS();
+    void D0();
 };
 
 
