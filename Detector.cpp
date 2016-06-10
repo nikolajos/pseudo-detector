@@ -125,7 +125,7 @@ void Detector::ATLAS()
     sub->alloweta[3.2] = false;
     
     sub->allowpt[0] = false;
-    sub->allowpt[25] = true;
+    sub->allowpt[10] = true;
 
     subsystems.push_back(sub);
     
@@ -153,7 +153,7 @@ void Detector::ATLAS()
     sub->alloweta[3.2] = false;
     
     sub->allowpt[0] = false;
-    sub->allowpt[25] = true;
+    sub->allowpt[10] = true;
     
     subsystems.push_back(sub);
 
@@ -181,7 +181,7 @@ void Detector::ATLAS()
     sub->alloweta[4.9] = false;
 
     sub->allowpt[0] = false;
-    sub->allowpt[25] = true;
+    sub->allowpt[10] = true;
 
     subsystems.push_back(sub);
     
@@ -193,7 +193,7 @@ void Detector::ATLAS()
     sub->alloweta[2.7] = false;
 
     sub->allowpt[0] = false;
-    sub->allowpt[3] = true;
+    sub->allowpt[10] = true;
     
     subsystems.push_back(sub);
 }
@@ -230,11 +230,11 @@ void Detector::D0()
     sub->allowid.insert(321);
     sub->allowid.insert(-321);
 
-    // Tracker covers |eta| < 3 though resoltion is worse for |eta| > 1.7
+    // Tracker covers |eta| < 3 though resolution is worse for |eta| > 1.7
     sub->alloweta[0] = true;
     sub->alloweta[3] = false;
 
-    sub->alloweta[0] = false;
+    sub->allowpt[0] = false;
     sub->allowpt[1.5] = true; // Value for L1 Trigger in CFT
     
     subsystems.push_back(sub);
